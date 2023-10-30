@@ -1,11 +1,12 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-import { PictureService } from './service';
-import { PictureStore } from './store/store';
-import { FileSystemPictureStore } from './store/filesystem';
+import * as pictureUtil from 'image-size';
+import { PictureService } from '../service';
+import { PictureStore } from '../store/store';
+import { FileSystemPictureStore } from '../store/filesystem';
 
 describe("Picture", () => {
 
-  const pictureStore = new FileSystemPictureStore();
+  const pictureStore: PictureStore = new FileSystemPictureStore();
   const service = new PictureService(pictureStore);
 
   beforeEach(async () => {
