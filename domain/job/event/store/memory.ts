@@ -29,4 +29,8 @@ export class InMemoryJobEventStore implements JobEventStore {
 		this.nextId = 0;
 	}
 
+	async getAll(): Promise<JobEvent[]> {
+		return [...this.events];
+	}
+
 }
