@@ -13,4 +13,8 @@ export class PictureService {
 		const thumbnailData = await this.thumbnailService.generate(imageData, { width: 100, height: 100});
 		await this.pictureStore.save(`${pictureName}-thumbnail`, thumbnailData);
 	}
+
+	async getThumbnail(pictureName: string) {
+		return this.pictureStore.get(`${pictureName}-thumbnail`);
+	}
 }
