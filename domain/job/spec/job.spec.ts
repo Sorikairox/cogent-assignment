@@ -1,8 +1,11 @@
 import { UTCDateMini } from '@date-fns/utc';
 import { it, describe, expect, afterEach } from 'vitest';
 import { InMemoryJobEventStore } from '../event/store/memory';
+import { JobStatus } from '../job';
 import { JobService } from '../service';
 import { JobEventStore } from '../event/store/store';
+
+
 
 describe('Job', () => {
 
@@ -16,18 +19,19 @@ describe('Job', () => {
 		});
 
 		it ('create id and return job', async () => {
-			const savedjob = await jobService.create({ type: 'thumbnail', data: { name: 'coolpicture' } });
+			const job = await createJob();
 
-			expect(savedjob.id).toBeDefined();
+			expect(job.id).toBeDefined();
 		});
 
 		it ('create job event', async () => {
-			const savedJob = await jobService.create({ type: 'thumbnail', data: { name: 'coolpicture' } });
-			const lastJobEvent = await jobStore.getLastJobEvent(savedJob.id);
+			const job = await createJob();
+
+			const lastJobEvent = await jobStore.getLastJobEvent(job.id);
 
 			expect(lastJobEvent).toMatchObject({
 				id: 0,
-				entityId: savedJob.id,
+				entityId: job.id,
 				status: 'created',
 			});
 			expect(lastJobEvent.data.type).toEqual('thumbnail');
@@ -38,18 +42,25 @@ describe('Job', () => {
 	});
 
 	describe('Get one job status', async () => {
-		it('get only relevant information', async () => {
-			const savedJob = await jobService.create({ type: 'thumbnail', data: { name: 'coolpicture' } });
-			await jobStore.create({ entityId: savedJob.id, status: 'inprogress', createdAt: new UTCDateMini(), data: null  });
+		it('get relevant information', async () => {
+			const job = await createJob();
+			await createJobEvent(job.id, 'inprogress');
 
-			const jobStatus = await jobService.getJob(savedJob.id);
+			const jobStatus = await jobService.getJob(job.id);
 
 			expect(jobStatus).toMatchObject({
-				id: savedJob.id,
+				id: job.id,
 				status: 'inprogress',
 				type: 'thumbnail'
 			});
 			expect(jobStatus.lastChangeDate).toBeDefined();
 		});
 	});
+
+	async function createJob() {
+		return jobService.create({ type: 'thumbnail', data: { name: 'coolpicture' } });
+	}
+	async function createJobEvent(jobId: string, status: JobStatus) {
+		await jobStore.create({ entityId: jobId, status, createdAt: new UTCDateMini(), data: null });
+	}
 });
