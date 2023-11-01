@@ -3,17 +3,30 @@ import { JobEventStore } from './store';
 
 export class InMemoryJobEventStore implements JobEventStore {
 	private nextId = 0;
-	public readonly events: JobEvent[] = [];
+	public  events: JobEvent[] = [];
+
 	async create(event: JobEvent) {
 		this.events.push({
+			...event,
 			id: this.nextId,
-			...event
 		});
 		this.nextId++;
 	}
 
+	async getJobEvents(jobId: string): Promise<JobEvent[]> {
+		return this.events.filter(j => j.entityId === jobId);
+	}
+
 	async getLastJobEvent(jobId: string): Promise<JobEvent> {
-		return this.events.find(j => j.entityId === jobId);
+		const lastEvent =  this.events.findLast(j => j.entityId === jobId);
+		if (!lastEvent)
+			throw Error('NoEventForJob');
+		return lastEvent;
+	}
+
+	async deleteAll() {
+		this.events = [];
+		this.nextId = 0;
 	}
 
 }
