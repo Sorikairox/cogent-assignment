@@ -21,6 +21,7 @@ describe('Picture', () => {
 	});
 
 	describe('Save', () => {
+
 		it('save picture',  async () => {
 			const pictureBuffer = await pictureStore.get('smiley-1');
 			const fileContent = pictureBuffer.toString();
@@ -32,9 +33,11 @@ describe('Picture', () => {
 	});
 
 	describe('Generate thumbnail', () => {
+
 		afterEach(async () => {
 			await pictureStore.delete('fixture-200-200-thumbnail');
 		});
+
 		it('thumbnail name is picture name+thumbnail', async () => {
 			await service.generateThumbnail('fixture-200-200');
 
@@ -47,10 +50,13 @@ describe('Picture', () => {
 	});
 
 	describe('Get thumbnail', () => {
+
 		it('works if exist', async () => {
 			const thumbnailBuffer = await service.getThumbnail('fixture');
+
 			const fileContent = thumbnailBuffer.toString();
 			expect(fileContent).toEqual('hello\n');
 		});
+
 	});
 });

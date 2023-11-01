@@ -11,9 +11,11 @@ describe('Job', () => {
 
 	const jobStore: JobEventStore = new InMemoryJobEventStore();
 	const jobService: JobService = new JobService(jobStore);
+
 	afterEach(async () => {
 		await jobStore.deleteAll();
 	});
+
 	describe('Creation', () => {
 
 		it ('create id and return job', async () => {
@@ -40,6 +42,7 @@ describe('Job', () => {
 	});
 
 	describe('Get one job status', async () => {
+
 		it('get relevant information', async () => {
 			const job = await createJob();
 			await createJobEvent(job.id, 'inprogress');
@@ -53,9 +56,11 @@ describe('Job', () => {
 			});
 			expect(jobStatus.lastChangeDate).toBeDefined();
 		});
+
 	});
 
 	describe('Get all job status', () => {
+
 		it('get relevant information', async () => {
 			const firstJob = await createJob();
 			const secondJob = await createJob();
@@ -87,6 +92,7 @@ describe('Job', () => {
 					type: 'thumbnail'
 				});
 		});
+
 	});
 
 	async function createJob() {
