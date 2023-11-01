@@ -58,11 +58,11 @@ describe('Job', () => {
 	describe('Get all job status', () => {
 		it('get relevant information', async () => {
 			const firstJob = await createJob();
-			await createJobEvent(firstJob.id, 'inprogress');
 			const secondJob = await createJob();
 			await createJobEvent(secondJob.id, 'inprogress');
-			await createJobEvent(secondJob.id, 'success');
 			const thirdJob = await createJob();
+			await createJobEvent(firstJob.id, 'inprogress');
+			await createJobEvent(secondJob.id, 'success');
 			await createJobEvent(thirdJob.id, 'inprogress');
 			await createJobEvent(thirdJob.id, 'error');
 
