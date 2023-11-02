@@ -3,7 +3,7 @@ import { it, describe, expect, afterEach } from 'vitest';
 import { JobEvent } from '../event/entity';
 import { InMemoryJobEventStore } from '../../../adapter/secondary/job/event/store/memory';
 import { Job, JobStatus } from '../entity';
-import { InMemoryJobSender } from '../../../adapter/secondary/job/event/sender/memory';
+import { InMemoryJobSender } from '../../../adapter/secondary/job/sender/memory';
 import { JobService } from '../service';
 import { JobEventStore } from '../event/store';
 
