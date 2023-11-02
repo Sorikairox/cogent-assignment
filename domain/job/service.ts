@@ -2,22 +2,24 @@ import { UTCDateMini } from '@date-fns/utc';
 import { v4 as uuidv4 } from 'uuid';
 import { Job } from './job';
 import { JobEventStore } from './event/store/store';
+import { JobSender } from './sender/service';
 
 export class JobService {
 
-	constructor(private jobStore: JobEventStore) {
+	constructor(private jobStore: JobEventStore, private jobSender: JobSender) {
 	}
 	async create(jobData: Pick<Job, 'type' | 'data'>) {
 		const job = {
 			...jobData,
 			id: uuidv4()
 		};
-		this.jobStore.create({
+		await this.jobStore.create({
 			entityId: job.id,
 			status: 'created',
 			data: job,
 			createdAt: new UTCDateMini(),
 		});
+		await this.jobSender.send(job);
 		return job;
 	}
 

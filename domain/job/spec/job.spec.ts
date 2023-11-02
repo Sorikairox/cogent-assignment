@@ -3,6 +3,7 @@ import { it, describe, expect, afterEach } from 'vitest';
 import { JobEvent } from '../event/event';
 import { InMemoryJobEventStore } from '../event/store/memory';
 import { Job, JobStatus } from '../job';
+import { InMemoryJobSender } from '../sender/memory';
 import { JobService } from '../service';
 import { JobEventStore } from '../event/store/store';
 
@@ -10,8 +11,9 @@ import { JobEventStore } from '../event/store/store';
 
 describe('Job', () => {
 
+	const jobSender: InMemoryJobSender = new InMemoryJobSender();
 	const jobStore: JobEventStore = new InMemoryJobEventStore();
-	const jobService: JobService = new JobService(jobStore);
+	const jobService: JobService = new JobService(jobStore, jobSender);
 
 	afterEach(async () => {
 		await jobStore.deleteAll();
@@ -38,6 +40,12 @@ describe('Job', () => {
 			expect(lastJobEvent.data.type).toEqual('thumbnail');
 			expect(lastJobEvent.id).toBeDefined();
 			expect(lastJobEvent.createdAt).toBeDefined();
+		});
+
+		it ('create id and return job', async () => {
+			const job = await createJob();
+
+			expect(jobSender.sentJobs[job.id]).toEqual(true);
 		});
 
 	});
