@@ -1,5 +1,5 @@
-import { JobEvent } from '../event';
-import { JobEventStore } from './store';
+import { JobEvent } from '../../../../../domain/job/event/entity';
+import { JobEventStore } from '../../../../../domain/job/event/store';
 
 export class InMemoryJobEventStore implements JobEventStore {
 	private nextId = 0;

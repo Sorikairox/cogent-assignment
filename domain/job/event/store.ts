@@ -1,4 +1,4 @@
-import { JobEvent } from '../event';
+import { JobEvent } from './entity';
 
 export interface JobEventStore {
   create(event: Omit<JobEvent, 'id'>): Promise<void>;

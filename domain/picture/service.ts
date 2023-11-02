@@ -1,4 +1,4 @@
-import { PictureStore } from './store/store';
+import { PictureStore } from './store';
 import { ThumbnailService } from './thumbnail/service';
 
 export class PictureService {

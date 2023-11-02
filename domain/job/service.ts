@@ -1,8 +1,8 @@
 import { UTCDateMini } from '@date-fns/utc';
 import { v4 as uuidv4 } from 'uuid';
-import { Job } from './job';
-import { JobEventStore } from './event/store/store';
-import { JobSender } from './sender/service';
+import { Job } from './entity';
+import { JobEventStore } from './event/store';
+import { JobSender } from './event/sender';
 
 export class JobService {
 

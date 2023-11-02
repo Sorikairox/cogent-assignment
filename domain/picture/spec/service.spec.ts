@@ -1,10 +1,10 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import * as pictureUtil from 'image-size';
 import { PictureService } from '../service';
-import { PictureStore } from '../store/store';
-import { FileSystemPictureStore } from '../store/filesystem';
+import { PictureStore } from '../store';
+import { FileSystemPictureStore } from '../../../adapter/secondary/picture/store/filesystem';
 import { ThumbnailService } from '../thumbnail/service';
-import { ImageThumbnailLibService } from '../thumbnail/service.image-thumbnail-lib';
+import { ImageThumbnailLibService } from '../../../adapter/secondary/picture/thumbnail/service.image-thumbnail-lib';
 
 describe('Picture', () => {
 
