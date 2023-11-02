@@ -1,5 +1,6 @@
 import { UTCDateMini } from '@date-fns/utc';
 import { it, describe, expect, afterEach } from 'vitest';
+import { JobEvent } from '../event/event';
 import { InMemoryJobEventStore } from '../event/store/memory';
 import { Job, JobStatus } from '../job';
 import { JobService } from '../service';
@@ -99,16 +100,29 @@ describe('Job', () => {
 
 		it('run provided function', async () => {
 			const job = await createJob();
-			const jobFunction = async (job: Pick<Job, 'id' | 'type' | 'data'>) => {
-				job.data.executed = true;
-			};
 
-			jobService.execute(job, jobFunction);
+			await jobService.execute(job, setJobDataExecutedToTrue);
 
 			expect(job.data.executed).toEqual(true);
 		});
 
+		it('save status on success', async () => {
+			const job = await createJob();
+
+			await jobService.execute(job, setJobDataExecutedToTrue);
+			const lastEventForJob = await jobStore.getLastJobEvent(job.id);
+			expect(lastEventForJob).toMatchObject<Partial<JobEvent>>({
+				entityId: job.id,
+				status: 'success'
+			});
+		});
+
+
 	});
+
+	const setJobDataExecutedToTrue = async (job: Pick<Job, 'id' | 'type' | 'data'>) => {
+		job.data.executed = true;
+	};
 
 	async function createJob() {
 		return jobService.create({ type: 'thumbnail', data: { name: 'coolpicture' } });
