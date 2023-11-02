@@ -52,7 +52,12 @@ export class JobService {
 	}
 
 	async execute(job:  Pick<Job, 'id' | 'type' | 'data'>, action: (j: Pick<Job, 'id' | 'type' | 'data'>) => Promise<void>) {
-		await action(job);
-		await this.jobStore.create({ entityId: job.id, status: 'success', createdAt: new UTCDateMini(), data: job});
+		try {
+			await action(job);
+		} catch (e) {
+			await this.jobStore.create({ entityId: job.id, status: 'error', createdAt: new UTCDateMini(), data: e });
+			return;
+		}
+		await this.jobStore.create({ entityId: job.id, status: 'success', createdAt: new UTCDateMini(), data: job });
 	}
 }

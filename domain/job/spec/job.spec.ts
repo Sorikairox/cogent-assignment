@@ -117,6 +117,19 @@ describe('Job', () => {
 			});
 		});
 
+		it('save status on action throw', async () => {
+			const job = await createJob();
+
+			await jobService.execute(job, async (job) =>  {
+				throw new Error(`${job.id} failed for some reason`);
+			});
+			const lastEventForJob = await jobStore.getLastJobEvent(job.id);
+
+			expect(lastEventForJob).toMatchObject<Partial<JobEvent>>({
+				entityId: job.id,
+				status: 'error'
+			});
+		});
 
 	});
 
