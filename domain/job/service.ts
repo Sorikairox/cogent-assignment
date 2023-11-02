@@ -50,4 +50,8 @@ export class JobService {
 		});
 		return jobOrder.map((jobId) => jobMap[jobId]);
 	}
+
+	async execute(job:  Pick<Job, 'id' | 'type' | 'data'>, action: (j: Pick<Job, 'id' | 'type' | 'data'>) => Promise<void>) {
+		await action(job);
+	}
 }

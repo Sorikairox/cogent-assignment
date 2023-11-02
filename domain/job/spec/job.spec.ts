@@ -1,7 +1,7 @@
 import { UTCDateMini } from '@date-fns/utc';
 import { it, describe, expect, afterEach } from 'vitest';
 import { InMemoryJobEventStore } from '../event/store/memory';
-import { JobStatus } from '../job';
+import { Job, JobStatus } from '../job';
 import { JobService } from '../service';
 import { JobEventStore } from '../event/store/store';
 
@@ -91,6 +91,21 @@ describe('Job', () => {
 					status: 'error',
 					type: 'thumbnail'
 				});
+		});
+
+	});
+
+	describe('Execute job', () => {
+
+		it('run provided function', async () => {
+			const job = await createJob();
+			const jobFunction = async (job: Pick<Job, 'id' | 'type' | 'data'>) => {
+				job.data.executed = true;
+			};
+
+			jobService.execute(job, jobFunction);
+
+			expect(job.data.executed).toEqual(true);
 		});
 
 	});
