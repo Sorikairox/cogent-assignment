@@ -2,6 +2,7 @@
   "scripts": {
     "test": "vitest --run",
     "test:watch": "vitest",
+    "test:integration": "vitest --run --config ./vitest.integration.config.ts",
     "lint": "yarn eslint **/*.ts"
   },
   "dependencies": {
@@ -10,6 +11,10 @@
     "@types/uuid": "^9.0.6",
     "image-size": "^1.0.2",
     "image-thumbnail": "^1.0.15",
+    "pg": "^8.11.3",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.3.17",
+    "typeorm-extension": "^3.1.1",
     "typescript": "^5.2.2",
     "uuid": "^9.0.1",
     "vitest": "^0.34.6"
