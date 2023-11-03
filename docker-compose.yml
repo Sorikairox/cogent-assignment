@@ -1,4 +1,4 @@
-version: '3.1'
+version: '3.8'
 
 services:
 
@@ -9,3 +9,48 @@ services:
       POSTGRES_PASSWORD: example
     ports:
       - "5432:5432"
+
+  api:
+    build:
+      context: .
+      dockerfile: ./adapter/primary/api/Dockerfile
+    container_name: api
+    environment:
+      WEBHOOK_URL: 'http://worker:4343'
+      PICTURE_STORE_PATH: '/etc/data'
+      DB_HOST: 'db'
+      DB_PORT: '5432'
+      DB_USERNAME: 'postgres'
+      DB_PASSWORD: 'example'
+      DB_NAME: 'postgres'
+      PORT: 4242
+    ports:
+      - '4242:4242'
+    depends_on:
+      - db
+    volumes:
+      - picture-data:/etc/data
+
+  worker:
+      build:
+        context: .
+        dockerfile: ./adapter/primary/worker/Dockerfile
+      container_name: worker
+      environment:
+        PICTURE_STORE_PATH: '/etc/data/'
+        DB_HOST: 'db'
+        DB_PORT: '5432'
+        DB_USERNAME: 'postgres'
+        DB_PASSWORD: 'example'
+        DB_NAME: 'postgres'
+        PORT: 4343
+      ports:
+        - '4343:4343'
+      depends_on:
+        - db
+      volumes:
+        - picture-data:/etc/data
+
+volumes:
+  picture-data:
+

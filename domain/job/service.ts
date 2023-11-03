@@ -2,7 +2,7 @@ import { UTCDateMini } from '@date-fns/utc';
 import { v4 as uuidv4 } from 'uuid';
 import { Job } from './entity';
 import { JobEventStore } from './event/store';
-import { JobSender } from './event/sender';
+import { JobSender } from './sender';
 
 export class JobService {
 
@@ -58,7 +58,7 @@ export class JobService {
 			await action(job);
 		} catch (e) {
 			await this.jobStore.create({ entityId: job.id, status: 'error', createdAt: new UTCDateMini(), data: e });
-			return;
+			throw e;
 		}
 		await this.jobStore.create({ entityId: job.id, status: 'success', createdAt: new UTCDateMini(), data: job });
 	}

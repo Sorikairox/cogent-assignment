@@ -1,5 +1,5 @@
 import { Job } from '../../../../domain/job/entity';
-import { JobSender } from '../../../../domain/job/event/sender';
+import { JobSender } from '../../../../domain/job/sender';
 
 export class InMemoryJobSender implements JobSender {
 	public sentJobs: Record<string, boolean> = {};

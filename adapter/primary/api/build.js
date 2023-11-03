@@ -6,6 +6,6 @@ esbuild.build({
   entryPoints: ['./src/main.ts'],
   bundle: true,
   packages: 'external',
-  outfile: 'dist/out.js',
+  outfile: 'dist/app.js',
   plugins: [esbuildPluginTsc()],
 });

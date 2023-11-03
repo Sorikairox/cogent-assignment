@@ -26,7 +26,9 @@
     "eslint": "^8.52.0"
   },
   "workspaces": [
-    "domain/"
+    "domain/",
+    "adapter/primary/api",
+    "adapter/primary/worker"
   ],
   "private": true
 }

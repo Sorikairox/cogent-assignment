@@ -3,6 +3,7 @@ import {
   Get,
   Param,
   Post,
+  StreamableFile,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
@@ -29,7 +30,9 @@ export class AppController {
 
   @Get('thumbnail/:sourcePictureName')
   async getThumbnail(@Param('sourcePictureName') sourcePictureName) {
-    return this.pictureService.getThumbnail(sourcePictureName);
+    const thumbnailBuffer =
+      await this.pictureService.getThumbnail(sourcePictureName);
+    return new StreamableFile(thumbnailBuffer);
   }
 
   @Get('job/:id')

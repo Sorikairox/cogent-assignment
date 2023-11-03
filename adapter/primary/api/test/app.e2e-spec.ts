@@ -51,13 +51,13 @@ describe('AppController (e2e)', () => {
     createdJobId = response.body.id;
   });
 
-  it('/thumbnail/fixture (GET)', async () => {
+  it('/thumbnail/:name (GET)', async () => {
     const response = await request(app.getHttpServer())
       .get('/thumbnail/fixture')
       .buffer(true);
 
     expect(response.status).toEqual(200);
-    expect(Buffer.from([...response.body.data]).toString()).toEqual('hello\n');
+    expect(Buffer.from([...response.body]).toString()).toEqual('hello\n');
   });
 
   it('/job/:id (GET)', async () => {

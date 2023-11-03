@@ -128,9 +128,12 @@ describe('Job', () => {
 		it('save status on action throw', async () => {
 			const job = await createJob();
 
-			await jobService.execute(job, async (job) =>  {
-				throw new Error(`${job.id} failed for some reason`);
-			});
+			try {
+				await jobService.execute(job, async (job) =>  {
+					throw new Error(`${job.id} failed for some reason`);
+				});
+			} catch (e) { /* empty */ }
+
 			const lastEventForJob = await jobStore.getLastJobEvent(job.id);
 
 			expect(lastEventForJob).toMatchObject<Partial<JobEvent>>({
