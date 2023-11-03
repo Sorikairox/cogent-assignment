@@ -9,20 +9,13 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import { JobService } from '../../../../domain/job/service';
 import { PictureService } from '../../../../domain/picture/service';
-import { AppService } from './app.service';
 
 @Controller()
 export class AppController {
   constructor(
-    private readonly appService: AppService,
     private readonly pictureService: PictureService,
     private readonly jobService: JobService,
   ) {}
-
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
-  }
 
   @Post('thumbnail/create')
   @UseInterceptors(FileInterceptor('file'))

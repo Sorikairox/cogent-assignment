@@ -11,7 +11,6 @@ import { WebhookJobEventSender } from '../../../secondary/job/sender/webhook';
 import { FileSystemPictureStore } from '../../../secondary/picture/store/filesystem';
 import { ImageThumbnailLibService } from '../../../secondary/picture/thumbnail/service.image-thumbnail-lib';
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
 
 @Module({
   imports: [
@@ -29,7 +28,6 @@ import { AppService } from './app.service';
   ],
   controllers: [AppController],
   providers: [
-    AppService,
     {
       provide: 'JOB_EVENT_STORE',
       useClass: TypeORMJobEventStore,
