@@ -4,6 +4,9 @@
     "test:watch": "vitest",
     "test:integration": "vitest --run --config ./vitest.integration.config.ts",
     "test:integration:watch": "vitest --config ./vitest.integration.config.ts",
+    "test:api:e2e": "cd adapter/primary/api && yarn test:e2e",
+    "test:worker:e2e": "cd adapter/primary/worker && yarn test:e2e",
+    "test:e2e": "yarn test:api:e2e && yarn test:worker:e2e",
     "lint": "yarn eslint **/*.ts"
   },
   "dependencies": {
