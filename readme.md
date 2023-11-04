@@ -14,12 +14,15 @@ My name is Thomas Cruveilher. This repository is my submission for an assignment
 # Code Architecture
 
 Folder and code architectures are made with Clean/Hexa/Onion architecture in mind. As the 3 revolve around the same principles with separated layers. 
+
 Here, we have domain and adapter directories.
 
 ## Primary Adapters
 
 Primary adapters are where we get inputs from. This could be UI if the project needs one, but in our case, it consists of two HTTP servers, `worker` and `api`.
+
 Their only purpose is to get inputs from users/consumers and send them to the service/business layer from the `domain`.
+
 Each primary adapter directory is dependent on the framework used. I chose to use Nest.
 
 ### Api
@@ -144,9 +147,11 @@ Always send back "ok" and will store job status.
 ## Secondary Adapters
 
 Secondary adapters are "output" of the business/domain logic. Think about storage such as filesystem, s3 buckets or database and outward communication to external API via http request, message in queue, websocket etc.
+
 They are implementation of interfaces from the domain, so the folder architecture is similar.
 
 In Memory/Filesystem adapters are used by the domain during unit test, so they do not have the own test.
+
 Other adapters using SQL for example have their own integration test  (described below).
 
 ### Job Event Store
@@ -229,7 +234,8 @@ Few benefits is ease monitoring and stats creation.
 ## Hexa/Clean/Onion architecture, or folder's hell ?
 
 I think that this architecture comes with a high cognitive load for developers with no experience with it.
-However, anybody can learn to work with it, and I believe that in the long run, such architecture with no coupling, thanks to abstraction, in par with cohesive team discipline (TDD for example) drastically increase maintainability and flexibility (such as moving from one db provider to another, or one framework to another).
+
+However, anybody can learn to work, and I believe that in the long run, such architecture with no coupling, thanks to abstraction, in par with cohesive team discipline (TDD for example) drastically increase maintainability and flexibility (such as moving from one db provider to another, or one framework to another).
 
 ## Webhook vs Queue
 
@@ -253,13 +259,14 @@ But it comes with a learning curve, like everything.
 ## Thumbnail generation strategy
 
 I chose `image-thumbnail` because its installation is easy.
+
 Potentially more performant library all requires MagickImage cli to be installed before hand.
 
 ## SQL database
 
 Cogent labs using a SQL database, looked like the obvious choice.
-Also, Event-Sourcing requires auto-increment ID.
 
+Also, Event-Sourcing requires auto-increment ID.
 
 # Installation
 
@@ -319,7 +326,9 @@ yarn test:integration:watch
 ### End to end (e2e)
 
 This strategy make sure that we integrated everything correctly in  our primary adapters API and Worker.
+
 They are "end-to-end" relative to each adapter context. They are not tests from the end user/consumer perspective with all systems running.
+
 For example, API tests call all API endpoints, and ensure that we get the expected response, but does not check that the worker did what it has to do.
 
 **Requires a running DB (use `docker compose up`)**
