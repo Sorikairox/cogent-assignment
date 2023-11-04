@@ -346,7 +346,7 @@ yarn test:e2e
 - Pagination on get job (cannot be done efficiently without snapshots)
 - Handle image extensions
 - Setup OpenAPI/Swagger documentation
-- Resolve todos regarding edge cases (at least our IDE screams at you)
+- Handle all non optimistic edge cases such as when images/jobs do not exist, or external providers fails.
 
 ## Codewise:
 - Improve Job data and JobEvent data attributes, probably with generic
