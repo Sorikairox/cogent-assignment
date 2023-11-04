@@ -14,7 +14,6 @@ services:
     build:
       context: .
       dockerfile: ./adapter/primary/api/Dockerfile
-    container_name: api
     environment:
       WEBHOOK_URL: 'http://worker:4343'
       PICTURE_STORE_PATH: '/etc/data'
@@ -35,7 +34,6 @@ services:
       build:
         context: .
         dockerfile: ./adapter/primary/worker/Dockerfile
-      container_name: worker
       environment:
         PICTURE_STORE_PATH: '/etc/data/'
         DB_HOST: 'db'
