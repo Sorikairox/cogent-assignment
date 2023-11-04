@@ -8,7 +8,7 @@ My name is Thomas Cruveilher. This repository is my submission for an assignment
 - [System Architecture](#system-architecture)
 - [Architecture discussion/thoughts](#architecture-discussionthoughts)
 - [Installation](#installation)
-- [Improvements](#improvements)
+- [Improvements](#improvements-arbitrary-order)
 
 
 # Code Architecture
@@ -220,7 +220,7 @@ All domains features are unit tested by using in memory/filesystem adapters. Thi
 Deployed system has 4 components:
 
 - API to be accessed freely
-- Worker which is trigger by API via webhook
+- Worker which is triggered by API via webhook
 - Postgres Database for job events storage
 - A shared volume to store/access thumbnail/source image
 
@@ -337,9 +337,9 @@ For example, API tests call all API endpoints, and ensure that we get the expect
 yarn test:e2e
 ```
 
-# Improvements
+# Improvements (arbitrary order)
 
-## Features (arbitrary order):
+## Features:
 - Retry mechanism for webhook delivery
 - Add reasons on error when getting job(s) status
 - Snapshots to offload processing
