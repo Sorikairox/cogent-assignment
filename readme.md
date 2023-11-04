@@ -208,6 +208,7 @@ Here are the actual features:
 
 - save source image
 - create thumbnail from source image
+- get thumbnail by giving source image name
 - create a job
 - get a job status
 - get all job status
@@ -279,7 +280,7 @@ Also, Event-Sourcing requires auto-increment ID.
 
 ## Install dependencies
 
-This project uses yarn workspace, simply `yarn` this at the project root folder.
+This project uses yarn workspace, simply run `yarn`  at the project root folder.
 
 ## Run API + Worker + DB + Shared volumes
 
