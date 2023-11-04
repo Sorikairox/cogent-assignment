@@ -6,6 +6,7 @@
 - Pagination on get job (cannot be done efficiently without snapshots)
 - Handle image extensions
 - Setup OpenAPI/Swagger documentation 
+- Resolve todos regarding edge cases
 
 ## Codewise: 
 - Improve Job data and JobEvent data attributes, probably with generic
