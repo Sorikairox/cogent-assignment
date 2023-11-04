@@ -1,6 +1,6 @@
 # Description
 
-My name is Thomas Cruveilher. This repository is my submission for an assignment given by Cogent Lab during their recruitment process.
+My name is Thomas Cruveilher. This repository is my submission for an assignment given by Cogent Labs during their recruitment process.
 
 # Summary
 
@@ -337,7 +337,7 @@ For example, API tests call all API endpoints, and ensure that we get the expect
 yarn test:e2e
 ```
 
-# Improvements 
+# Improvements
 
 ## Features (arbitrary order):
 - Retry mechanism for webhook delivery
