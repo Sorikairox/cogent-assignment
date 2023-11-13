@@ -11,7 +11,11 @@ export class FileSystemPictureStore {
 		return readFile(`${this.basePath}/${name}`);
 	}
 
-	delete(name: string): Promise<void> {
-		return rm(`${this.basePath}/${name}`);
+	async delete(name: string): Promise<void> {
+		try {
+		 return await rm(`${this.basePath}/${name}`);
+		} catch (e) {
+
+		}
 	}
 }

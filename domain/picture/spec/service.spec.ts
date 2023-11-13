@@ -35,18 +35,24 @@ describe('Picture', () => {
 	describe('Generate thumbnail', () => {
 
 		afterEach(async () => {
-			await pictureStore.delete('fixture-200-200-thumbnail');
+			pictureStore.delete('fixture-200-200-thumbnail'); 
+			pictureStore.delete('fixture-200-200-thumbnail.png');
 		});
 
-		it('thumbnail name is picture name+thumbnail', async () => {
-			await service.generateThumbnail('fixture-200-200');
+		it.each(
+			[
+				{ pictureName: 'fixture-200-200', expectedThumbnailName: 'fixture-200-200-thumbnail' },
+				{ pictureName: 'fixture-200-200.png', expectedThumbnailName: 'fixture-200-200-thumbnail.png' },
+			]
+		)('create $expectedThumbnailName from $pictureName', async ({ pictureName, expectedThumbnailName }: { pictureName: string, expectedThumbnailName: string }) => {
+			await service.generateThumbnail(pictureName);
 
-			const thumbnailBuffer = await pictureStore.get('fixture-200-200-thumbnail');
+			const thumbnailBuffer = await pictureStore.get(expectedThumbnailName);
 			const dimensions = pictureUtil.imageSize(thumbnailBuffer);
 
 			expect(dimensions.height).toEqual(100);
 			expect(dimensions.width).toEqual(100);
-		});
+		  });
 	});
 
 	describe('Get thumbnail', () => {

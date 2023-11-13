@@ -1,11 +1,11 @@
 {
   "scripts": {
-    "test": "vitest --run",
-    "test:watch": "vitest",
-    "test:integration": "vitest --run --config ./vitest.integration.config.ts",
-    "test:integration:watch": "vitest --config ./vitest.integration.config.ts",
-    "test:api:e2e": "cd adapter/primary/api && yarn test:e2e",
-    "test:worker:e2e": "cd adapter/primary/worker && yarn test:e2e",
+    "test": "vitest --run --no-threads",
+    "test:watch": "vitest --no-threads",
+    "test:integration": "vitest --run --config ./vitest.integration.config.ts --no-threads",
+    "test:integration:watch": "vitest --config ./vitest.integration.config.ts --no-threads",
+    "test:api:e2e": "cd adapter/primary/api && yarn test:e2e --no-threads",
+    "test:worker:e2e": "cd adapter/primary/worker && yarn test:e2e --no-threads",
     "test:e2e": "yarn test:api:e2e && yarn test:worker:e2e",
     "lint": "yarn eslint **/*.ts"
   },

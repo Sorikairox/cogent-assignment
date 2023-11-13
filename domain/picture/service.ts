@@ -11,10 +11,18 @@ export class PictureService {
 	async generateThumbnail(pictureName: string) {
 		const imageData = await this.pictureStore.get(pictureName);
 		const thumbnailData = await this.thumbnailService.generate(imageData, { width: 100, height: 100});
-		await this.pictureStore.save(`${pictureName}-thumbnail`, thumbnailData);
+		const thumbnailPictureName = this.generateThumbnailName(pictureName);
+		await this.pictureStore.save(`${thumbnailPictureName}`, thumbnailData);
 	}
 
 	async getThumbnail(pictureName: string) {
 		return this.pictureStore.get(`${pictureName}-thumbnail`);
+	}
+
+	private generateThumbnailName(pictureName: string) {
+		const [name, extension] = pictureName.split('.');
+		if (extension)
+			return `${name}-thumbnail.${extension}`;
+		return `${pictureName}-thumbnail`;
 	}
 }
